@@ -1,0 +1,147 @@
+{% extends 'recipe_admin/base.html' %}
+{% block content %}
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1 style="color: #ea4989;">My profile</h1>
+        <!--    <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
+                <li class="breadcrumb-item active">Profile</li>
+            </ol>
+        </nav> -->
+    </div><!-- End Page Title -->
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible" style="text-align: left;">
+        <a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+        <strong>{{message}}</strong>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible" style="text-align: left;">
+        <a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+        <strong>{{message}}</strong>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <div class="content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="profile-section">
+                    <div class="avatar-upload">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <input type="hidden" name="editprofile" value="upload_image">
+                            <input type="hidden" name="email" value="{{user.email}}">
+                            <div class="avatar-edit">
+                                <!-- {{img_form.img}} -->
+                                <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" name="img" onchange="form.submit()" />
+                                <label for="imageUpload">
+                                    <i class="bi bi-camera"></i>
+                                </label>
+                            </div>
+                        </form>
+                        <div class="avatar-preview">
+                            {% if user.img %}
+                            <div id="imagePreview" style="background-image: url({{ user.img.url }});">
+                            </div>
+                          
+                            {% endif %}
+                        </div>
+                        {% if user.img %}
+                        <a href="{{ user.img.url }}" style="text-decoration: none;margin-left: 30px;
+    font-size: 16px;" target="_blank">View Picture</a>
+    {% endif %}
+                    </div>
+                    <h1>{% if user.fullname %}{{user.fullname}}{% else %}{{user.email}}{% endif %}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="profile-box">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="editprofile" value="manage_profile">
+                <div class="row mt-3 mb-2">
+                    <div class="col-md-12">
+                        <div class="personal-section">
+                            <h3>Personal Profile</h3>
+                        </div>
+                    </div>
+                    <div class="mb-3 input row">
+                        <label for="First Name" class="col-sm-2 col-form-label">Full Name</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputFirstName" value="{{user.fullname|default:''}}" name="fullname">
+                        </div>
+                    </div>
+                    <div class="mb-3 input row">
+                        <label for="Last Name" class="col-sm-2 col-form-label">Username</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputLastName" readonly value="{{user.username|default:''}}" name="last_name">
+                        </div>
+                    </div>
+                    <div class="mb-3 input row">
+                        <label for="Email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputEmail" value="{{user.email|default:''}}" name="email" readonly>
+                        </div>
+                    </div>
+                    <div class="mb-3 input row">
+                        <label for="Company" class="col-sm-2 col-form-label">Phone</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="inputCompany" value="{{user.mobile_no|default:''}}" name="mobile_no">
+                        </div>
+                    </div>
+                    <div class="mb-3 input row">
+                        <label for="Company" class="col-sm-2 col-form-label">Gender</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" required name="gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+               <div class="text-end">
+                            <button type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                </div>
+            </form>
+        </div>
+        <div class="profile-box mt-3 mb-5">
+            <form method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="editprofile" value="change_password">
+                <input type="hidden" name="email" value="{{user.email}}">
+                <div class="row mt-3 mb-2">
+                    <div class="col-md-12">
+                        <div class="personal-section">
+                            <h3>Change Password</h3>
+                        </div>
+                    </div>
+                    <div class="mb-3 input row">
+                        <label for="Current Password" class="col-sm-2 col-form-label">Current Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputCurrentPassword" name="old_password">
+                        </div>
+                    </div>
+                    <div class="mb-3 input row">
+                        <label for="New Password" class="col-sm-2 col-form-label">New Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputNewPassword" name="password1">
+                        </div>
+                    </div>
+                    <div class="mb-3 input row">
+                        <label for="ConfirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="ConfirmPassword" name="password2">
+                        </div>
+                    </div>
+                      <div class="text-end">
+                            <button type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</main><!-- End #main -->
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base-template.html' %}
+{% block content %}
+{% load static %}
+<style>
+button.confirm {
+
+    display: inline-block;
+    background-color: #8c2c52;
+    box-shadow: #8c2c52;
+
+}
+</style>
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center text-md-left" data-aos="fade-up">
+        <h1>The Recipe Book </h1>
+    </div>
+</section>
+<main id="main">
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    {% include "recipe-profile.html" %}
+                </div>
+                <div class="col-md-9">
+                    {% include "tabs-menu.html" %}
+                    <!-- Tabs content -->
+                    <div class="tab-content profile-form" id="v-pills-tabContent">
+                        <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                            <div class="row">
+                                {% if recipes %}
+                                {% for data in recipes %}
+                              
+                                    <div class="col-md-4">
+                                          <a href="{% url 'dashboard:recipe_detail_dashboard' data.recipe.id %}">
+                                        <div class="product-boxe">
+                                            {% if data.recipe.img %}
+                                            <img src="{{data.recipe.img.url}}" style='height: 145px;
+    width: 218px;' class="img-fluid rounded-3 mb-3" alt="">
+                                            {% endif %}
+                                            <h3 class="sewing">{{data.recipe.name}}</h3>
+                                        </div>
+                                           </a>
+                                    </div>
+                             
+                                {% endfor %}
+                                {% else %}
+                                <h5 style="margin-left: 41%;color: red;">No Result Found</h5>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

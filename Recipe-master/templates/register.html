@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Recipe</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+
+</head>
+
+<body>
+
+  <main class="bg-login">
+    <div class="container">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row main-content bg-success text-center">
+			<div class="col-md-4 text-center company__info">
+				
+				<h4 class="company_title">Logo here</h4>
+			</div>
+			<div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+				<div class="container-fluid">
+					<div class="row mt-3">
+						<h2>Sign up</h2>
+					</div>
+					{% if messages %}
+					{% for message in messages %}
+
+						{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+						<div class="alert alert-danger alert-dismissible" style="text-align: left;">
+							<a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+							<strong>{{message}}</strong>
+						</div>
+	
+						{% else %}
+	
+						<div class="alert alert-success alert-dismissible" style="text-align: left;">
+							<a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+							<strong>{{message}}</strong>
+						</div>
+						{% endif %}
+
+					{% endfor %}
+				{% endif %}
+					<div class="row">
+						<form method="POST" control="" class="form-group">
+							{% csrf_token %}
+							<div class="row">
+								<input type="text" name="name" class="form__input" id="yourName" required placeholder="Name">
+							</div>
+							<div class="row">
+								<!-- <span class="fa fa-lock"></span> -->
+								<input type="text" required name="username" id="password" class="form__input" placeholder="User Name">
+							</div>
+							<div class="row">
+								<!-- <span class="fa fa-lock"></span> -->
+								<input type="email" required name="email" id="" class="form__input" placeholder="Email">
+							</div>
+							<div class="row">
+								<!-- <span class="fa fa-lock"></span> -->
+								<input type="password" required name="password" id="" class="form__input" placeholder="password">
+							</div>
+							<div class="row">
+								<!-- <span class="fa fa-lock"></span> -->
+								<input type="number" required name="phone" id="" class="form__input" placeholder="Mobile Number">
+							</div>
+							<div class="row">
+								<!-- <span class="fa fa-lock"></span> -->
+								<select class="form__input" required name="gender">
+					 <option value="gender">Gender</option>
+					 <option value="male">Male</option>
+					 <option  value="female">Female</option>
+					
+					 </select>
+							</div>
+							
+							<div class="row">
+								<input type="submit" value="Submit" class="btn">
+							</div>
+						</form>
+					</div>
+					<div class="row">
+						<p>Already have an account?  <a href="{% url 'user:login_view' %}">Log in</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+        </div>
+
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+
+
+</body>
+
+</html>

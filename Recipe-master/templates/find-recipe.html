@@ -1,0 +1,139 @@
+{% extends 'base-template.html' %}
+{% block content %}
+{% load static %}
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center text-md-left" data-aos="fade-up">
+        <h1>The Recipe Book </h1>
+    </div>
+</section><!-- End Hero -->
+<main id="main">
+     <marquee attribute_name = "attribute_value"....more attributes style="color: #ea4989;">
+          <span style="font-weight: 700;">Tips: </span><span>   {% for data in tips %} >>>{{data.name}}{% endfor %}</span>
+
+        <!--     >>>Don’t overcrowd the pan.   >>>Let red meat sit before cutting into it.    >>>Store spices in the right location.   >>>Shut the stove off before eggs are done.  >>>Chop herbs with salt.  >>>Add salt to boiling pasta water.  >>>Always keep a few essentials on hand.  >>>Keep the root of the onion intact to help with slicing.</span> -->
+ 
+</marquee>
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="supliers-left">
+                        <div class="filter-menu">
+                            <div class="accordion" id="faq">
+                                <div class="card">
+                                    <div class="card-header bg-danger text-white">
+                                        Recipe
+                                    </div>
+                                    <div class="card-body">
+                                        <ul>
+                                            {% for data in category %}
+                                            {% if data in category_list %}
+                                            <li><a href="#" class="filters">{{data.name}}<span><input value="id={{data.id}}" type="checkbox" class="category_type" checked></span></a></li>
+                                            {% else %}
+                                            <li><a href="#" class="filters">{{data.name}}<span><input value="id={{data.id}}" type="checkbox" class="category_type"></span></a></li>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <form method="GET" class="mb-3">
+                        <div class="input-group mb-3">
+                            <input type="search" name="q" value="{{q|default:''}}" class="form-control" aria-label="Amount (to the nearest dollar)">
+                            <button type="submit" class="input-group-text bg-danger text-white"><i class="bi bi-search"></i></button>
+                        </div>
+                    </form>
+                    <div class="row g-3">
+                        {% for data in recipes %}
+                        <div class="col-md-4">
+                            <div class="icon-box border rounded-3">
+                                <div id="carouselExampleIndicators{{data.id}}" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="{{data.img.url}}" width="264px" height="194px" class="img-fluid rounded-3 d-block w-100" alt="">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <!--        <iframe width="100%" height="230" src="{{data.video.url}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+                                            <video width="264px" height="194px" controls>
+                                                <source src="{{data.video.url}}" type="video/mp4">
+                                                </source>
+                                            </video>
+                                        </div>
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators{{data.id}}" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators{{data.id}}" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                <div class="p-3" style="    height: 251px;">
+                                    <h4><a href="{% url 'find_recipe:recipe_detail' data.id %}" target="blank">{{data.name}}</a> </h4>
+                                   
+                                    <div class="star-rating">
+ <div>
+  <button style="border: 0px solid #fff;
+    background: transparent;margin-left: 67px;" class="like" data-recipe_id="{{data.id}}"> {% if data|get_favourite_status:request.user %}<i class="bi bi-heart-fill"></i>{% else %}<i class="bi bi-heart"></i>{% endif %}</button></div>
+                                        <input id="star-5-{{data.name}}" type="radio" class="rating" data-id="{{data.id}}" data-value="5" name="rating" value="star-5-{{data.name}}" />
+                                        <label for="star-5-{{data.name}}" title="5 stars">
+                                            {% if data.rating_points_avg >= 5 and data.rating_points_avg < 6 %}
+                                            <i class="active bi bi-star-fill" style="color: #f2b600;" aria-hidden="true"></i>
+                                            {% else %}
+                                            <i class="active bi bi-star-fill" aria-hidden="true"></i>
+                                            {% endif %}
+                                        </label>
+                                        <input id="star-4-{{data.id}}" type="radio" class="rating" data-id="{{data.id}}" data-value="4" name="rating" value="star-4-{{data.id}}" />
+                                        <label for="star-4-{{data.id}}" title="4 stars">
+                                             {% if data.rating_points_avg >= 4 and data.rating_points_avg < 5  or data.rating_points_avg >= 5 and data.rating_points_avg < 6 %}
+                                            <i class="active bi bi-star-fill" style="color: #f2b600;" aria-hidden="true"></i>
+                                                {% else %}
+                                                <i class="active bi bi-star-fill" aria-hidden="true"></i>
+                                                {% endif %}
+                                        </label>
+                                        <input id="star-3-{{data.id}}" type="radio" class="rating" data-id="{{data.id}}" data-value="3" name="rating" value="star-3-{{data.id}}" />
+                                        <label for="star-3-{{data.id}}" title="3 stars">
+                                                 {% if data.rating_points_avg >= 3 and data.rating_points_avg < 4  or data.rating_points_avg >= 4 and data.rating_points_avg < 5  or data.rating_points_avg >= 5 and data.rating_points_avg < 6 %}
+                                             <i class="active bi bi-star-fill" style="color: #f2b600;" aria-hidden="true"></i>
+                                                {% else %}
+                                                <i class="active bi bi-star-fill" aria-hidden="true"></i>
+                                                {% endif %}
+                                        </label>
+                                        <input id="star-2-{{data.id}}" type="radio" class="rating" data-id="{{data.id}}" data-value="2" name="rating" value="star-2-{{data.id}}" />
+                                        <label for="star-2-{{data.id}}" title="2 stars">
+                                                  {% if data.rating_points_avg >= 2 and data.rating_points_avg < 3  or  data.rating_points_avg >= 3 and data.rating_points_avg < 4  or data.rating_points_avg >= 4 and data.rating_points_avg < 5  or data.rating_points_avg >= 5 and data.rating_points_avg < 6 %}
+                                             <i class="active bi bi-star-fill" style="color: #f2b600;" aria-hidden="true"></i>
+                                                {% else %}
+                                                <i class="active bi bi-star-fill" aria-hidden="true"></i>
+                                                {% endif %}
+                                        </label>
+                                        <input id="star-1-{{data.id}}" type="radio" class="rating" data-id="{{data.id}}" data-value="1" name="rating" value="star-1-{{data.id}}" />
+                                        <label for="star-1-{{data.id}}" title="1 star">
+                                            {% if data.rating_points_avg >= 1 and data.rating_points_avg < 2  or  data.rating_points_avg >= 2 and data.rating_points_avg < 3  or  data.rating_points_avg >= 3 and data.rating_points_avg < 4  or data.rating_points_avg >= 4 and data.rating_points_avg < 5 or data.rating_points_avg >= 5 and data.rating_points_avg < 6 %}
+                                            <i class="active bi bi-star-fill" style="color: #f2b600;" aria-hidden="true"></i>
+                                                {% else %}
+                                                <i class="active bi bi-star-fill" aria-hidden="true"></i>
+                                                {% endif %}
+                                        </label>
+                                      
+                                    </div>
+                                    <p>{{data.description|slice:'0:100'}}....</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}
+{% block script %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% load static %}
+<div class="profilebox">
+    {% if request.user.img %}
+     <img src="{{request.user.img.url}}" alt="Profile" class="w-100">
+    {% else %}
+    <img src="{% static '' %}" alt="Profile" class="w-100">
+    {% endif %}
+      
+    </div>    

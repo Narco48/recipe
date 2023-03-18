@@ -1,0 +1,66 @@
+
+
+<div class="bg-lightgray">
+    <div class="buttons_left">
+      <h1>{{request.user.fullname}}</h1>
+    </div>
+   
+    <div class="padding-tops">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="display_flex"> <i class="bi bi-calendar-check" style="font-size:24px"></i>
+            <p class="joineds">Joined {{request.user.created_at|date:'d-m-Y'}}</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="display_flex"> <i class="bi bi-phone" style="font-size:24px"></i>
+            <p class="joineds">{{request.user.mobile_no}}</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="display_flex"> <i class="bi bi-envelope" style="font-size:24px"></i>
+            <p class="joineds">{{request.user.email}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="" >
+    <div class="row">
+      <div class="col-md-12 padding-lefts">
+        <div class="tabbable-panel">
+          <div class="tabbable-line">
+            <ul class="nav nav-tabs">
+              <li class="active"> <a href="{% url 'dashboard:my_profile_view' %}">Edit Profile</a>
+              </li>
+              </li><li> <a href="{% url 'dashboard:change_password_view' %}">Change Password</a></li>
+              {% comment %} <li> <a href="{% url 'dashboard:recipe_upload_view' %}">Recipe upload</a>
+              </li> {% endcomment %}
+              <li> <a href="{% url 'dashboard:my_recipe_view' %}">My recipes</a></li>
+                <li> <a href="{% url 'dashboard:my_favourite_view' %}">My Favourites</a></li>
+             
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if messages %}
+  {% for message in messages %}
+
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible" style="text-align: left;">
+      <a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+      <strong>{{message}}</strong>
+    </div>
+
+    {% else %}
+
+    <div class="alert alert-success alert-dismissible" style="text-align: left;">
+      <a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+      <strong>{{message}}</strong>
+    </div>
+    {% endif %}
+
+  {% endfor %}
+{% endif %}

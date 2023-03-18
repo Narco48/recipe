@@ -1,0 +1,69 @@
+{% extends 'base-template.html' %}
+{% block content %}
+{% load static %}
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center text-md-left" data-aos="fade-up">
+        <h1>The Recipe Book </h1>
+    </div>
+</section><!-- End Hero -->
+<main id="main">
+    <marquee attribute_name="attribute_value" ....more attributes style="color: #ea4989;">
+        <span style="font-weight: 700;">Tips: </span><span> >>>Don’t overcrowd the pan. >>>Store spices in the right location.  >>>Add salt to boiling pasta water.  >>>Keep the root of the onion intact to help with slicing.</span>
+    </marquee>
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="supliers-left">
+                        <div class="filter-menu">
+                            <div class="accordion" id="faq">
+                                <div class="card">
+                                    <div class="card-header bg-danger text-white">
+                                        Recipe Image
+                                    </div>
+                                    <div class="card-body">
+                                        <img src="{{instance.img.url}}" style="width: 103%;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <!--       <form method="GET" class="mb-3">
+                        <div class="input-group mb-3">
+                            <input type="search" name="q" value="{{q|default:''}}" class="form-control" aria-label="Amount (to the nearest dollar)">
+                            <button type="submit" class="input-group-text bg-danger text-white"><i class="bi bi-search"></i></button>
+                        </div>
+                    </form> -->
+                    <div class="row g-3">
+                           <h2>Recipe Details</h2>
+                        <div class="row g-4">
+                         
+                            <div class="col-md-12">
+                                <p><span style="font-weight:700">Recipe Name :</span> {{instance.name}}</p>
+                            </div>
+                            <div class="col-md-12">
+                                <p><span style="font-weight:700">Photo url :</span><a href="{{instance.img.url}}" target="blank">{{instance.img.url}}</a></p>
+                            </div>
+                            <div class="col-md-12">
+                                <p><span style="font-weight:700">Tutorial Video:</span>
+                                    <a href="{{instance.video.url}}" target="blank">{{instance.video.url}}</a></p>
+                            </div>
+                            <div class="col-md-12">
+                                <p><span style="font-weight:700">Category</span>
+                                    {{ instance.category.name}}</p>
+                            </div>
+                            <div class="col-md-12">
+                                <p><span style="font-weight:700">Description :</span>
+                                    {{instance.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends 'recipe_admin/base.html' %}
+{% block content %}
+<style>
+.star-rating label {
+    color: #bbb;
+    font-size: 18px;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.star-rating input[type=radio] {
+    display: none;
+}
+    </style>
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1 style="color: #ea4989;">Manage Tips</h1>
+    </div>
+    <!-- End Page Title -->
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible" style="text-align: left;">
+        <a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+        <strong>{{message}}</strong>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible" style="text-align: left;">
+        <a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+        <strong>{{message}}</strong>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <section class="section dashboard">
+        <div class="card">
+            <div class="card-body p-5">
+                <!-- Recent Sales -->
+                <a href="{% url 'recipe_admin:add_tip' %}" class="btn btn-primary" role="button" data-toggle="modal" data-target="#exampleModal" style="position: absolute;top: 1%;right: 4%;"><i class="fa fa-plus mr-5"></i>Add Tip</a>
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Tip Name</th>
+                                       <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for data in tips %}
+                                    <tr>
+                                        <td>{{data.name}}</td>
+                              
+                                
+                                        <td><a href="{% url 'recipe_admin:update_tip' data.id %}" class="d-inline-block btn btn-primary me-2"><i class="bi bi-pencil"></i></a>
+                                            <a href="javascript:void(0)" data-id="{{data.id}}" class="d-inline-block btn btn-danger delete-tip"><i class="bi bi-trash"></i></i></a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <!-- <div class="text-end"> <a href="#" class="btn btn-primary">View All</a></div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

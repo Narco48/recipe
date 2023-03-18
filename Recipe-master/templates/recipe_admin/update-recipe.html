@@ -1,0 +1,69 @@
+{% extends 'recipe_admin/base.html' %}
+{% block content %}
+<!-- ======= Hero Section ======= -->
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1 style="color: #ea4989;">Add Recipe</h1>
+    </div>
+    <!-- End Page Title -->
+    {% if messages %}
+    {% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger alert-dismissible" style="text-align: left;">
+        <a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+        <strong>{{message}}</strong>
+    </div>
+    {% else %}
+    <div class="alert alert-success alert-dismissible" style="text-align: left;">
+        <a href="#" class="close" data-bs-dismiss="alert" aria-label="close" style="color: crimson!important">&times;</a>
+        <strong>{{message}}</strong>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+    <section class="section dashboard">
+        <div class="card">  
+            <div class="card-body p-5">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label>Recipe Name</label>
+                           <input class="form-control" type="text" value="{{instance.name}}" name="name" required />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Photo upload</label>
+                          <input class="form-control" type="file" name="photo"  />
+                                url:<a href="{{instance.img.url}}" target="blank">{{instance.img.url}}</a>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Tutorial Video</label>
+                                 <input class="form-control" type="file" name="video"  />
+                                 url:<a href="{{instance.video.url}}" target="blank">{{instance.video.url}}</a>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Category</label>
+                       <select class="form-select" aria-label="Default select example" name="category">
+                                    {% for data in categories %}
+                                    {% if data.id == instance.category.id %}
+                                    <option value="{{data.id}}" selected>{{data.name}}</option>
+                                    {% else %}
+                                    <option value="{{data.id}}" >{{data.name}}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Description</label>
+                           <textarea class="form-control h-150" name='description' required />{{instance.description}}</textarea>
+                        </div>
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-danger">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,186 @@
+{% extends 'recipe_admin/base.html' %}
+{% block content %}
+<style>
+.star-rating label {
+    color: #bbb;
+    font-size: 18px;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.star-rating input[type=radio] {
+    display: none;
+}
+    </style>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1 style="color: #ea4989;">Dashboard</h1>
+        <nav>
+      <!--       <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav> -->
+    </div>
+    <!-- End Page Title -->
+
+    <section class="section dashboard">
+        <div class="row">
+
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row">
+
+                    <!-- Sales Card -->
+                    <div class="col-xxl-3 col-md-6">
+                        <div class="card info-card sales-card" style="background-color: #c98383;">
+
+
+
+                            <div class="card-body">
+                                <h5 class="card-title">Total Users </h5>
+
+                                <div class="d-flex align-items-center">
+
+                                    <div class="ps-3">
+                                        <h6>{{total_user}}</h6>
+                                        <span class="text-success small pt-1 fw-bold">Total</span> <span class="text-muted small pt-2 ps-1">Users</span>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- End Sales Card -->
+
+
+
+                    <!-- Customers Card -->
+                    <div class="col-xxl-3 col-xl-6">
+
+                        <div class="card info-card customers-card" style="background-color: #c98383;">
+
+
+
+                            <div class="card-body">
+                                <h5 class="card-title">Total Recipes</h5>
+
+                                <div class="d-flex align-items-center">
+
+                                    <div class="ps-3">
+                                        <h6>{{total_recipe}}</h6>
+                                        <span class="text-success small pt-1 fw-bold">Total</span> <span class="text-muted small pt-2 ps-1">Recipes</span>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- End Customers Card -->
+
+                    <!-- Reports -->
+
+
+                    <!-- Recent Sales -->
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Last Uploded Recipes</h5>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                           
+                                            <th>Recipe Name</th>
+                                            <th>Category</th>
+                                            <th>short Description</th>
+                                               <th>Rating</th>
+                                            <th>Photo</th>
+                                            <th>Video</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for data in recipes %}
+                                        <tr>
+                                          
+                                            <td>{{data.name}}</td>
+                                            <td>{{data.category}}</td>
+                                            <td>{{data.description}}</td>
+                                             <td class="star-rating">
+                      
+             
+                         
+                        
+                                        <input id="star-1-{{data.id}}" type="radio" class="rating" data-id="{{data.id}}" data-value="1" name="rating" value="star-1-{{data.id}}" />
+                                        <label for="star-1-{{data.id}}" title="1 star">
+                                            {% if data.rating_points_avg >= 1 and data.rating_points_avg < 2  or  data.rating_points_avg >= 2 and data.rating_points_avg < 3  or  data.rating_points_avg >= 3 and data.rating_points_avg < 4  or data.rating_points_avg >= 4 and data.rating_points_avg < 5 or data.rating_points_avg >= 5 and data.rating_points_avg < 6 %}
+                                            <i class="active bi bi-star-fill" style="color: #f2b600;" aria-hidden="true"></i>
+                                                {% else %}
+                                                <i class="active bi bi-star-fill" aria-hidden="true"></i>
+                                                {% endif %}
+                                        </label>
+                                                        <input id="star-2-{{data.id}}" type="radio" class="rating" data-id="{{data.id}}" data-value="2" name="rating" value="star-2-{{data.id}}" />
+                                        <label for="star-2-{{data.id}}" title="2 stars">
+                                                  {% if data.rating_points_avg >= 2 and data.rating_points_avg < 3  or  data.rating_points_avg >= 3 and data.rating_points_avg < 4  or data.rating_points_avg >= 4 and data.rating_points_avg < 5  or data.rating_points_avg >= 5 and data.rating_points_avg < 6 %}
+                                             <i class="active bi bi-star-fill" style="color: #f2b600;" aria-hidden="true"></i>
+                                                {% else %}
+                                                <i class="active bi bi-star-fill" aria-hidden="true"></i>
+                                                {% endif %}
+                                        </label>
+                                                       <input id="star-3-{{data.id}}" type="radio" class="rating" data-id="{{data.id}}" data-value="3" name="rating" value="star-3-{{data.id}}" />
+                                        <label for="star-3-{{data.id}}" title="3 stars">
+                                                 {% if data.rating_points_avg >= 3 and data.rating_points_avg < 4  or data.rating_points_avg >= 4 and data.rating_points_avg < 5  or data.rating_points_avg >= 5 and data.rating_points_avg < 6 %}
+                                             <i class="active bi bi-star-fill" style="color: #f2b600;" aria-hidden="true"></i>
+                                                {% else %}
+                                                <i class="active bi bi-star-fill" aria-hidden="true"></i>
+                                                {% endif %}
+                                        </label>
+                                                                   <input id="star-4-{{data.id}}" type="radio" class="rating" data-id="{{data.id}}" data-value="4" name="rating" value="star-4-{{data.id}}" />
+                                        <label for="star-4-{{data.id}}" title="4 stars">
+                                             {% if data.rating_points_avg >= 4 and data.rating_points_avg < 5  or data.rating_points_avg >= 5 and data.rating_points_avg < 6 %}
+                                            <i class="active bi bi-star-fill" style="color: #f2b600;" aria-hidden="true"></i>
+                                                {% else %}
+                                                <i class="active bi bi-star-fill" aria-hidden="true"></i>
+                                                {% endif %}
+                                        </label>
+
+                                                               <input id="star-5-{{data.name}}" type="radio" class="rating" data-id="{{data.id}}" data-value="5" name="rating" value="star-5-{{data.name}}" />
+                                        <label for="star-5-{{data.name}}" title="5 stars">
+                                            {% if data.rating_points_avg >= 5 and data.rating_points_avg < 6 %}
+                                            <i class="active bi bi-star-fill" style="color: #f2b600;" aria-hidden="true"></i>
+                                            {% else %}
+                                            <i class="active bi bi-star-fill" aria-hidden="true"></i>
+                                            {% endif %}
+                                        </label>
+                                        </td>
+                                            <td><a href="{{data.img.url}}" target="blank">View photo</a></td>
+                                            <td><a href="{{data.video.url}}" target="blank">Watch video</a></td>
+                                        </tr>
+										{% endfor %}
+                                        
+                                    </tbody>
+                                </table>
+								<!-- <div class="text-end"> <a href="#" class="btn btn-primary">View All</a></div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Recent Sales -->
+
+                    <!-- Top Selling -->
+
+
+                </div>
+            </div>
+            <!-- End Left side columns -->
+
+            <!-- Right side columns -->
+
+
+        </div>
+    </section>
+
+</main>
+{% endblock %}

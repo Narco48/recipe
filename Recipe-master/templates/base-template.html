@@ -1,0 +1,259 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Recipe</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="{% static 'assets/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <!-- Template Main CSS File -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top d-flex align-items-center">
+        <div class="container d-flex align-items-center">
+            <div class="logo me-auto">
+                <h1><a href="">logo here</a></h1>
+            </div>
+            <nav id="navbar" class="navbar order-last order-lg-0">
+                <ul>
+                    <li><a class="nav-link scrollto active" href="{% url 'home:home_view' %}#hero">Home</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'home:home_view' %}#about">About</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'home:home_view' %}#contact">Contact Us</a></li>
+                    <li><a class="nav-link scrollto " href="{% url 'find_recipe:find_recipe_view' %}">Find Recipe</a></li>
+                        {% if request.user.is_authenticated %}
+                       <li><a class="nav-link scrollto " href="{% url 'dashboard:recipe_upload_view' %}">Upload Recipe</a></li>
+                          <li><a class="nav-link scrollto " href="{% url 'dashboard:my_favourite_view' %}">Favourite Recipe</a></li>
+                          {% endif %}
+                    {% if not request.user.is_authenticated %}
+                    <li><a class="nav-link scrollto" href="{% url 'user:login_view' %}">Login</a></li>
+                    <li><a class="nav-link scrollto" href="{% url 'user:register_view' %}"> Register </a></li>
+                    {% endif %}
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown pe-3">
+                        <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                            {% if request.user.img %}
+                            <img src="{{request.user.img.url}}" alt="Profile" class="rounded-circle">
+                            {% else %}
+                             <img src="{% static '' %}" alt="Profile" class="rounded-circle">
+                            {% endif %}
+                            <span class="d-none d-md-block dropdown-toggle ps-2">{% if request.user.is_authenticated %}{{request.user.username}}{% else %}Admin{% endif %}</span>
+                        </a><!-- End Profile Iamge Icon -->
+                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow fs-5">
+                            <li>
+                                <a class="dropdown-item " href="{% url 'dashboard:my_profile_view' %}">
+                                    <i class="bi bi-person me-2 fs-5"></i>
+                                    My Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{% url 'user:logout' %}">
+                                    <i class="bi bi-box-arrow-right me-2 fs-5"></i>
+                                    <span>Sign Out</span>
+                                </a>
+                            </li>
+                        </ul><!-- End Profile Dropdown Items -->
+                    </li>
+                    {% endif %}
+                </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+            </nav><!-- .navbar -->
+        </div>
+    </header><!-- End Header -->
+    {% block content %}
+    {% endblock %}
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container py-4">
+            <div class="text-center">
+                <div class="copyright">
+                    &copy; Copyright <strong><span>Recipe</span></strong>. All Rights Reserved
+                </div>
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!-- Vendor JS Files -->
+    <script src="{% static 'assets/vendor/purecounter/purecounter.js' %}"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/vendor/waypoints/noframework.waypoints.js' %}"></script>
+    <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <!-- Template Main JS File -->
+    <script src="assets/js/main.js"></script>
+    <Script>
+    $(document).ready(function() {
+        $(".delete").click(function() {
+            var delete_value = $(this).data("id");
+            console.log(delete_value)
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to delete !",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn-danger',
+                    confirmButtonText: 'Yes, delete it!',
+                    closeOnConfirm: false,
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        var token = '{{csrf_token}}';
+                        $.ajax({
+                            headers: { "X-CSRFToken": token },
+                            url: "/dashboard/delete-data/" + delete_value,
+                            type: "POST",
+                            success: function(json) {
+                                swal("Done!", "It was succesfully deleted!", "success");
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    }
+                })
+        });
+    });
+    </script>
+    <Script>
+    $(document).ready(function() {
+        $(".set-status").click(function() {
+            var value = $(this).data("id");
+            console.log(value)
+            swal({
+                    title: "Are you sure?",
+                    text: "You want to change !",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: 'btn-danger',
+                    confirmButtonText: 'Yes, change it!',
+                    closeOnConfirm: false,
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        var token = '{{csrf_token}}';
+                        $.ajax({
+                            headers: { "X-CSRFToken": token },
+                            url: "/dashboard/set-status/" + value,
+                            type: "POST",
+                            success: function(json) {
+                                swal("Done!", "It was succesfully deleted!", "success");
+                                location.reload();
+                            }
+                        });
+                    } else {
+                        swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    }
+                })
+        });
+    });
+    </script>
+    <script>
+$(document).on('change', ".short_by", function() {
+    var short_by = $(this).val();
+    // alert(short_by);
+    window.location.href = short_by;
+    set_short_filter(short_by);
+
+});
+
+$(document).on("change", ".filters", function() {
+    console.log("success")
+    set_short_filter();
+});
+
+
+function set_short_filter(set_filter = "") {
+    var category_type = "";
+
+    $(".category_type:checked").each(function() {
+        category_type = category_type + "&" + $(this).val();
+        console.log(category_type);
+
+    });
+    var selected = $(".category_type :selected").map((_, e) => e.value).get()
+
+    for (var i = selected.length - 1; i >= 0; i--) {
+        if (selected[i] != '') {
+
+            category_type = category_type + "&" + selected[i];
+            console.log(category_type)
+        }
+    }
+
+    var setfilterURL = "";
+
+    if (category_type) { setfilterURL = setfilterURL + category_type };
+    if (set_filter) { setfilterURL = setfilterURL + "&" + set_filter; }
+
+    window.location.href = "?" + setfilterURL;
+
+}
+</script>
+<script>
+  $(".rating").on('click', function(e){
+    let value = $(this).data('value');
+    let id = $(this).data('id');
+    console.log(value,id)
+    var token = '{{csrf_token}}'
+     $.ajax({
+          headers: { "X-CSRFToken": token },
+        url: "{% url 'find_recipe:rating_recipe_view' %}",
+        type: 'POST',
+        data: {'value': value,'id':id},
+        success: function (d){
+         // some processing
+         console.log(true)
+        }
+     })
+  
+  });
+</script>
+
+<script>
+  $(".like").on('click', function(e){
+    {% if request.user.is_authenticated %}
+    let value = $(this).data('recipe_id');
+
+    console.log(value)
+    var token = '{{csrf_token}}'
+     $.ajax({
+          headers: { "X-CSRFToken": token },
+        url: "{% url 'dashboard:set_favourite' %}",
+        type: 'POST',
+        data: {'value': value},
+        success: function (d){
+         // some processing
+         location.reload()
+        }
+     })
+     {% else %}
+
+     alert("Login Or Register to add in favourite")
+     {% endif %}
+  
+  });
+</script>
+
+</body>
+
+</html>

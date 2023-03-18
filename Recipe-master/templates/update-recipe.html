@@ -1,0 +1,62 @@
+{% extends 'base-template.html' %}
+{% block content %}
+{% load static %}
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center text-md-left" data-aos="fade-up">
+        <h1>The Recipe Book </h1>
+    </div>
+</section><!-- End Hero -->
+<main id="main">
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    {% include "recipe-profile.html" %}
+                </div>
+                <div class="col-md-9">
+                    {% include "tabs-menu.html" %}
+                    <form class="mt-4" method='POST' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label>Recipe Name</label>
+                                <input class="form-control" type="text" value="{{instance.name}}" name="name" required />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Photo upload</label>
+                                <input class="form-control" type="file" name="photo"  />
+                                url:<a href="{{instance.img.url}}" target="blank">{{instance.img.url}}</a>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Tutorial Video</label>
+                                <input class="form-control" type="file" name="video"  />
+                                 url:<a href="{{instance.video.url}}" target="blank">{{instance.video.url}}</a>
+                            </div>
+                            <div class="col-md-6">
+                                <label>Category</label>
+                                <select class="form-select" aria-label="Default select example" name="category">
+                                    {% for data in categories %}
+                                    {% if data.id == instance.category.id %}
+                                    <option value="{{data.id}}" selected>{{data.name}}</option>
+                                    {% else %}
+                                    <option value="{{data.id}}" >{{data.name}}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-12">
+                                <label>Description</label>
+                                <textarea class="form-control h-150" name='description' required />{{instance.description}}</textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <button type='submit' class="btn btn-danger">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}

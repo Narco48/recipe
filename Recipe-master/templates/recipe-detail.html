@@ -1,0 +1,52 @@
+{% extends 'base-template.html' %}
+{% block content %}
+{% load static %}
+<!-- ======= Hero Section ======= -->
+<section id="hero" class="d-flex flex-column justify-content-center align-items-center">
+    <div class="container text-center text-md-left" data-aos="fade-up">
+        <h1>The Recipe Book </h1>
+    </div>
+</section><!-- End Hero -->
+<main id="main">
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    {% include "recipe-profile.html" %}
+                </div>
+                <div class="col-md-9">
+                    {% include "tabs-menu.html" %}
+                    <form class="mt-4" method='POST' enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row g-4">
+                            <div class="col-md-12">
+                                <p><span style="font-weight:700">Recipe Name :</span> {{instance.name}}</p>
+                              
+                            </div>
+                            <div class="col-md-12">
+                                <p><span style="font-weight:700">Photo url :</span><a href="{{instance.img.url}}" target="blank">{{instance.img.url}}</a></p>
+                              
+                                
+                            </div>
+                            <div class="col-md-12">
+                                 <p><span style="font-weight:700">Tutorial Video:</span>
+                            
+                                 <a href="{{instance.video.url}}" target="blank">{{instance.video.url}}</a></p>
+                            </div>
+                            <div class="col-md-12">
+                                   <p><span style="font-weight:700">Category</span>
+                                {{ instance.category.name}}</p>
+                            </div>
+                            <div class="col-md-12">
+                               <p><span style="font-weight:700">Description :</span>
+                               {{instance.description}}</p>
+                            </div>
+                       
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main><!-- End #main -->
+{% endblock %}
